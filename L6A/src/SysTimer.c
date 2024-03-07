@@ -41,7 +41,7 @@ void delay(uint32_t ms) {
 	//Reset VAL to 0
 	SysTick->VAL = 0;
 	//Set LOAD
-	SysTick->LOAD = ;
+	SysTick->LOAD = 79999;
 	//Enable SysTick
 	SysTick->CTRL |= SysTick_CTRL_ENABLE_Msk;
 	//busy waiting for counter to reach desired value
@@ -58,7 +58,7 @@ void startTimer(void) {
 	//reset VAL to 0
 	SysTick->VAL = 0;
 	//Set LOAD
-	SysTick->LOAD =;
+	SysTick->LOAD = 79;
 	//Enable SysTick
 	SysTick->CTRL |= SysTick_CTRL_ENABLE_Msk;
 
@@ -68,7 +68,6 @@ uint32_t endTimer(void) {
 	//Disable SysTick
 	SysTick->CTRL &= ~SysTick_CTRL_ENABLE_Msk;
 	//Read values from VAL and counter
-	uint32_t val = SysTick->VAL;
 	//Calculate the time using both numbers
-	return 0;//TODO
+	return step;
 }

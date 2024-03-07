@@ -25,7 +25,7 @@ uint32_t CrcSoftwareFunc(uint32_t Initial_Crc, uint32_t Input_Data, uint32_t POL
 
   /* The CRC algorithm routine */
   while(bindex < (sizeof(Input_Data)*8)){
-    if(Crc & (1 << 31) == 1){
+    if(((Crc >> 31) & 1) == 1){
       Crc = (Crc << 1) ^ POLY;
     }else{
       Crc = Crc << 1;

@@ -17,7 +17,6 @@
 /* Expected CRC Value */
 #define uwExpectedCRCValue 0x5A60861E
 
-static volatile uint32_t Software_ComputedCRC;
 static volatile uint32_t Initial_CRC = INITIAL_CRC_VALUE;
 static volatile uint32_t time;
 
@@ -29,27 +28,32 @@ int main(void) {
 	// initialize modules
 	SysTick_Init();
 	LED_Init();
+	UART2_GPIO_Init();
 	UART2_Init();
+	USART_Init(USART2);
 
-	volatile uint32_t i = 0;
+	printf("Starting CRC\n");
 
-	while(i <= BUFFER_SIZE) {
+
+	while(1) {
+		Initial_CRC = INITIAL_CRC_VALUE;
 		LED_Toggle();
 		// initialize CRC
 		// start timer
 		startTimer();
 		// compute CRC
-		Software_ComputedCRC = CrcSoftwareFunc(Initial_CRC, DataBuffer[i], POLYNOME);
+		for(int i=0; i<BUFFER_SIZE; i++){
+			Initial_CRC = CrcSoftwareFunc(Initial_CRC, DataBuffer[i], POLYNOME);
+		}
 		// end timer
 		time = endTimer();
 		// check CRC
-		if(Software_ComputedCRC != uwExpectedCRCValue){
+		if(Initial_CRC != uwExpectedCRCValue){
 			LED_Off();
 		}
 		// print time
-		printf("Time = %d ms", time);
+		printf("Time = %d us\n", time);
 		// delay 1 sec
 		delay(1000);
-		i++;
 	}
 }
