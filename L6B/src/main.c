@@ -15,33 +15,41 @@
 #include <stdio.h>
 
 /* Expected CRC Value */
-static uint32_t uwExpectedCRCValue = 0x5A60861E;	
+static uint32_t uwExpectedCRCValue = 0x5A60861E;
 
 int main(void) {
   static uint32_t ComputedCRC;
 	uint32_t time;
-	
+
 	// Switch System Clock = 80 MHz
-	System_Clock_Init(); 
+	System_Clock_Init();
 	SysTick_Init();
-	LED_Init();	
+	LED_Init();
 	CRC_Init();
 	UART2_GPIO_Init();
 	UART2_Init();
 	USART_Init(USART2);
-	
+
 	while(1) {
 		// toggle LED
 		LED_Toggle();
+
 		// Compute the CRC of DataBuffer
 		// start timer
+		startTimer();
 		// reset CRC
+		CRC->CR |= CRC_CR_RESET;
 		// compute CRC
+		ComputedCRC = CRC_CalcBlockCRC(DataBuffer , BUFFER_SIZE);
 		// stop timer
+		time = endTimer();
 		// if CRC doesn't match expected CRC, turn LED off, break
+		if(ComputedCRC != uwExpectedCRCValue){
+			LED_Off();
+		}
 		// print time to compute
+		printf("Time: %d us\n", time);
 		// delay 1 second
+		delay(1000);
 	}
 }
-
-

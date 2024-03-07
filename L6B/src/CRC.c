@@ -17,8 +17,9 @@
 uint32_t CRC_CalcBlockCRC(const uint32_t * pBuffer, uint32_t BufferLength) {
   uint32_t index = 0;
   // write all data into data register
-  CRC->DR = *pBuffer[index];
-  index++;
+  for(index = 0; index < BufferLength; index++){
+    CRC->DR = *pBuffer++;
+  }
   return CRC->DR;  // read CRC from data register
 }
 

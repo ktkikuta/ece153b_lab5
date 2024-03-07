@@ -22,7 +22,6 @@ void SysTick_Init(void) {
 	// Select clock source
 	// If CLKSOURCE = 0, the external clock is used. The frequency of SysTick clock is the frequency of the AHB clock divided by 8.
 	// If CLKSOURCE = 1, the processor clock is used.
-	// TODO
 	SysTick->CTRL |= SysTick_CTRL_CLKSOURCE_Msk;
 
 	// Configure and Enable SysTick interrupt in NVIC
@@ -35,7 +34,6 @@ void SysTick_Handler(void) {
 }
 
 void delay(uint32_t ms) {
-	//TODO
 	//Reset Counter
 	step = 0;
 	//Reset VAL to 0
@@ -47,12 +45,9 @@ void delay(uint32_t ms) {
 	//busy waiting for counter to reach desired value
 	while((SysTick->VAL & ms) == 0);
 	SysTick->CTRL &= ~SysTick_CTRL_ENABLE_Msk;
-
-
 }
 
 void startTimer(void) {
-	//TODO
 	//reset counter
 	step = 0;
 	//reset VAL to 0
