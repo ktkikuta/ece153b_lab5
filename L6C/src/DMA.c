@@ -79,7 +79,7 @@ void DMA1_Channel6_IRQHandler(void){
 	//		as completed by calling computationComplete.
 	if (DMA1->ISR & DMA_ISR_TCIF6) {
 		DMA1->IFCR |= DMA_IFCR_CTCIF6; // clear transfer complete flag for channel 6
-		completeCRC(DMA1_Channel6->CCR);
+		completeCRC(CRC->DR);
 	}
 	
 	// 3. Clear global DMA interrupt flag.

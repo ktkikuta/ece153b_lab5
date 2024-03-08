@@ -65,10 +65,8 @@ int main(void) {
 		DMA1_Channel6->CCR |= DMA_CCR_EN;
 		
 		// 7. Wait till the computation is completed
-		while (ComputationDone != 1) {
-			ComputedCRC = CRC_CalcBlockCRC(DataBuffer, BUFFER_SIZE);
-		}
-		
+		while (ComputationDone != 1);
+			
 		// 8. Disable DMA channel
 		DMA1_Channel6->CCR &= ~DMA_CCR_EN;
 		
