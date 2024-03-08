@@ -14,7 +14,6 @@ void SysTick_Init(void) {
 	// SysTick Control & Status Register
 	SysTick->CTRL = 0; // Disable SysTick IRQ and SysTick Counter
 
-
 	// Enables SysTick exception request
 	// 1 = counting down to zero asserts the SysTick exception request
 	// 0 = counting down to zero does not assert the SysTick exception request
