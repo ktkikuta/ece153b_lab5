@@ -31,18 +31,33 @@ void SysTick_Init(void) {
 }
 
 void SysTick_Handler(void) {
-	//TODO
+	++step;
 }
 
-void delay(uint32_t ms) {
-	//TODO
+void delay(uint32_t us) {
+	step = 0;
+	SysTick->VAL = 0;
+	SysTick->LOAD = 79;
+	SysTick->CTRL |= SysTick_CTRL_ENABLE_Msk;
+	while((SysTick->VAL & us) == 0);
+	SysTick->CTRL &= ~SysTick_CTRL_ENABLE_Msk;
 }
 
 void startTimer(void) {
-	//TODO
+	//reset counter
+	step = 0;
+	//reset VAL to 0
+	SysTick->VAL = 0;
+	//Set LOAD
+	SysTick->LOAD = 79;
+	//Enable SysTick
+	SysTick->CTRL |= SysTick_CTRL_ENABLE_Msk;
 }
 
 uint32_t endTimer(void) {
-	//TODO
-	return 0;
+	//Disable SysTick
+	SysTick->CTRL &= ~SysTick_CTRL_ENABLE_Msk;
+	//Read values from VAL and counter
+	//Calculate the time using both numbers
+	return step;
 }
